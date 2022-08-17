@@ -16,7 +16,7 @@ export const getUsers = () => {
         })
 }
 
-export const setUser = async (username) => {
+export const setUser = (username) => {
 
     return instance.post('process-user', {username})
         .then(response => response.data)
