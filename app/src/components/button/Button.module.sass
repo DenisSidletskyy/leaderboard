@@ -1,0 +1,21 @@
+@import "../../mixins"
+
+.orangeWhite
+  @include buttonStyle(#F99746, 10px, 6px 24px)
+  @include textStyle(0.833em, 600, 12px, #FFFFFF)
+
+.blueWhite
+  @include buttonStyle(#1E3CA9, 10px, 6px 24px)
+  @include textStyle(0.833em, 600, 12px, #FFFFFF)
+
+.orangeBlack
+  @include buttonStyle(#F99746, 10px, 6px 24px)
+  @include textStyle(0.833em, 600, 12px, #000000S)
+
+.navigate
+  @include buttonStyle(transparent, 0, 4px 4px)
+  @include textStyle(0.583em, 600, 7px, #000000)
+
+.edit
+  @include buttonStyle(transparent, 0, 0)
+  display: inline-flex
