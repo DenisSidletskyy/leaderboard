@@ -1,5 +1,15 @@
 @font-face {
     font-family: "Montserrat";
-    src: url("fonts/Montserrat-Regular.ttf") format("truetype");
-    font-weight: normal;
+    src: url("fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
+
+#root{
+    min-height: 100vh;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+}
+
+button {
+    border: 0;
+    cursor: pointer;
 }
