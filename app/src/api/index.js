@@ -1,2 +1,2 @@
-import {getUsers, setUser} from './api'
-export {getUsers, setUser}
+import {getUsers, postUser} from './api'
+export {getUsers, postUser}
