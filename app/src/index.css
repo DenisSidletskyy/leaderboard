@@ -13,3 +13,16 @@ button {
     border: 0;
     cursor: pointer;
 }
+
+button:disabled {
+    cursor: default;
+}
+
+input {
+    outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance:none;
+}
