@@ -1,9 +1,11 @@
-const App = () => {
+import './App.sass'
+import {Board} from "components/board";
 
+const App = () => {
     return (
-        <>
-          app
-        </>
+        <div className='app'>
+            <Board/>
+        </div>
     );
 }
 

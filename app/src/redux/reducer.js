@@ -1,6 +1,15 @@
-import {ADD_USER, CHANGE_POSITION, CHANGE_USER, FORMAT_USERS, SET_POSITION, SET_USERS, SORT_USERS} from "./actions";
+import {
+    ADD_USER,
+    CHANGE_POSITION,
+    CHANGE_USER,
+    FORMAT_USERS,
+    OPEN_MODAL,
+    SET_POSITION,
+    SET_USERS,
+    SORT_USERS
+} from "./actions";
 
-export const reducer = (state = {users: null}, action) => {
+export const reducer = (state = {users: null, modal: null}, action) => {
 
     switch (action.type) {
 
@@ -45,7 +54,7 @@ export const reducer = (state = {users: null}, action) => {
                         position: {
                             curr: index + 1,
                             prev: user.position.curr,
-                            diff: Math.abs(user.position.curr - (index + 1))
+                            diff: user.position.curr - (index + 1)
                         }
                     }
                 }
@@ -60,7 +69,16 @@ export const reducer = (state = {users: null}, action) => {
                 ? {...user, name: action.name, score: action.score}
                 : user
             )
+        }
 
+        case OPEN_MODAL: return {
+            ...state,
+            modal: {
+                isOpen: action.isOpen,
+                prevUserData: action.id
+                    ? state.users.filter(user => user.id === action.id)
+                    : action.id
+            }
         }
 
         default: return state
