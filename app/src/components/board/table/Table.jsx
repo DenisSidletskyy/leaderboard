@@ -3,7 +3,16 @@ import {ReactComponent as Edit} from "images/edit.svg";
 import avatar from 'images/avatars/avatar1.svg'
 import Button from "../../button/Button";
 import {useDispatch} from "react-redux";
-import {toggleModalAC} from "../../../redux/actionCreators";
+import {
+    changeCurrentUsersAC,
+    formatUserAC,
+    setCurrentUsersAC, setGlobalLeadersAC,
+    setPositionAC,
+    setUsersAC,
+    sortUsersAC,
+    toggleModalAC
+} from "../../../redux/actionCreators";
+import {getUsers} from "../../../api";
 
 const User = ({user}) => {
 
@@ -49,12 +58,27 @@ const User = ({user}) => {
 
 }
 
-export const Table = ({users}) => {
+export const Table = ({users, usersLength, currentUsersIndex}) => {
 
     const dispatch = useDispatch()
 
     const openModal = (isOpen) => {
         dispatch(toggleModalAC(isOpen))
+    }
+
+    const getNewUsers = () => {
+        getUsers().then(data => {
+            dispatch(setUsersAC(data))
+            dispatch(setCurrentUsersAC())
+            dispatch(sortUsersAC())
+            dispatch(formatUserAC())
+            dispatch(setPositionAC())
+            dispatch(setGlobalLeadersAC())
+        })
+    }
+
+    const changeUsers = (direction) => {
+        dispatch(changeCurrentUsersAC(direction))
     }
 
     return (
@@ -67,23 +91,23 @@ export const Table = ({users}) => {
 
                     <Button
                         className={'navigate'}
-                        /*onClick={}
-                        disabled={}*/
+                        onClick={() => changeUsers(-1)}
+                        disabled={currentUsersIndex === 0}
                     >
                         {'<<'}
                     </Button>
 
                     <Button
                         className={'navigate'}
-                        /*onClick={}
-                        disabled={}*/
+                        onClick={() => changeUsers(1)}
+                        disabled={currentUsersIndex === usersLength - 1}
                     >
                         {'>>'}
                     </Button>
 
                     <Button
                         className={'orangeWhite'}
-                        /*onClick={}*/
+                        onClick={() => getNewUsers()}
                     >
                         New day
                     </Button>
@@ -99,7 +123,7 @@ export const Table = ({users}) => {
             </div>
 
             <div className={s.table}>
-                {users.map(user => <User key={user.id} user={user}/> )}
+                {users.map(user => <User key={`${user.id}-${currentUsersIndex}`} user={user}/>)}
             </div>
 
         </div>

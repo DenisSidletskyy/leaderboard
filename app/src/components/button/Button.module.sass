@@ -15,7 +15,11 @@
 
 .navigate
   @include buttonStyle(transparent, 0, 4px 4px)
-  @include textStyle(0.583em, 600, #000000)
+  @include textStyle(1em, 600, #000000)
+
+  &:disabled
+    opacity: 0.5
+    cursor: default
 
 .edit
   @include buttonStyle(transparent, 0, 0)

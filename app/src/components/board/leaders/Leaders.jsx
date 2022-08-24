@@ -11,7 +11,7 @@ const User = ({user}) => (
     </div>
 )
 
-export const Leaders = ({users}) => {
+export const Leaders = ({globalLeaders}) => {
     return (
         <div className={s.wrapper}>
             <div className={s.header}>
@@ -26,7 +26,7 @@ export const Leaders = ({users}) => {
                     <div className={s.description}>You can be among the leaders already today</div>
                     <img className={s.podium} src={podium} alt="podium"/>
                     <div className={s.users}>
-                        {users.slice(0, 4).map(user => <User key={user.id} user={user}/>)}
+                        {globalLeaders.map((user, index) => <User key={index} user={user}/>)}
                     </div>
                 </div>
             </div>

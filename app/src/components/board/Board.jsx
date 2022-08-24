@@ -4,7 +4,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal} from "../modal";
 import {useEffect} from "react";
 import {getUsers} from "../../api";
-import {formatUserAC, setPositionAC, setUsersAC, sortUsersAC} from "../../redux/actionCreators";
+import {
+    formatUserAC,
+    setCurrentUsersAC,
+    setGlobalLeadersAC,
+    setPositionAC,
+    setUsersAC,
+    sortUsersAC
+} from "../../redux/actionCreators";
 
 export const Board = () => {
 
@@ -15,9 +22,11 @@ export const Board = () => {
     useEffect(() => {
         getUsers().then(data => {
             dispatch(setUsersAC(data))
+            dispatch(setCurrentUsersAC())
             dispatch(sortUsersAC())
             dispatch(formatUserAC())
             dispatch(setPositionAC())
+            dispatch(setGlobalLeadersAC())
         })
     }, [])
 
@@ -28,8 +37,14 @@ export const Board = () => {
     return (
         <>
             {state.modal.isOpen ? <Modal prevUserData={state.modal.prevUserData}/> : null}
-            <Leaders users={state.users}/>
-            <Table users={state.users}/>
+
+            <Leaders globalLeaders={state.globalLeaders}/>
+
+            <Table
+                users={state.users[state.currentUsersIndex]}
+                usersLength={state.users.length}
+                currentUsersIndex={state.currentUsersIndex}
+            />
         </>
     )
 

@@ -1,4 +1,7 @@
 export const SET_USERS = 'SET_USERS'
+export const SET_CURRENT_USERS = 'SET_CURRENT_USERS'
+export const CHANGE_CURRENT_USERS = 'CHANGE_CURRENT_USERS'
+export const SET_GLOBAL_LEADERS = 'SET_GLOBAL_LEADERS'
 export const ADD_USER = 'ADD_USER'
 export const FORMAT_USERS = 'FORMAT_USER'
 export const SORT_USERS = 'SORT_USERS'

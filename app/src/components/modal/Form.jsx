@@ -6,7 +6,14 @@ import {ReactComponent as UpArrow} from "images/upArrow.svg";
 import {ReactComponent as DownArrow} from "images/downArrow.svg";
 import {useDispatch} from "react-redux";
 import {postUser} from "../../api";
-import {addUserAC, changePositionAC, changeUserAC, sortUsersAC, toggleModalAC} from "../../redux/actionCreators";
+import {
+    addUserAC,
+    changePositionAC,
+    changeUserAC,
+    setGlobalLeadersAC,
+    sortUsersAC,
+    toggleModalAC
+} from "../../redux/actionCreators";
 
 export const Form = ({prevUserData}) => {
 
@@ -28,7 +35,9 @@ export const Form = ({prevUserData}) => {
                 dispatch(changeUserAC(prevUserData.id, data['display-name'], values.points))
                 dispatch(sortUsersAC())
                 dispatch(changePositionAC())
+                dispatch(setGlobalLeadersAC())
                 dispatch(toggleModalAC(false))
+                resetForm({})
             })
         }
 
@@ -37,11 +46,11 @@ export const Form = ({prevUserData}) => {
                 dispatch(addUserAC({name: data['display-name'], score: values.points}))
                 dispatch(sortUsersAC())
                 dispatch(changePositionAC())
+                dispatch(setGlobalLeadersAC())
                 dispatch(toggleModalAC(false))
+                resetForm({})
             })
         }
-
-        resetForm({})
     }
 
     const form = useFormik({
