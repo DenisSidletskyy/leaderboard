@@ -68,8 +68,18 @@
 .plus
   @include textStyle(1em, 500, #40A3C3)
 
+  &:before
+    content: "\21E7"
+    padding: 5px
+    font-size: 15px
+
 .minus
   @include textStyle(1em, 500, #B64C41)
+
+  &:before
+    content: "\21E9"
+    padding: 5px
+    font-size: 15px
 
 @media (max-width: 650px)
   .top

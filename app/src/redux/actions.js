@@ -9,3 +9,5 @@ export const SET_POSITION = 'SET_POSITION'
 export const CHANGE_POSITION = 'CHANGE_POSITION'
 export const CHANGE_USER = 'CHANGE_USER'
 export const OPEN_MODAL = 'OPEN_MODAL'
+
+export const SET_IS_LOADED = 'SET_IS_LOADED'

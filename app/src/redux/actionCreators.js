@@ -6,7 +6,7 @@ import {
     FORMAT_USERS,
     OPEN_MODAL,
     SET_CURRENT_USERS,
-    SET_GLOBAL_LEADERS,
+    SET_GLOBAL_LEADERS, SET_IS_LOADED,
     SET_POSITION,
     SET_USERS,
     SORT_USERS
@@ -23,3 +23,4 @@ export const setPositionAC = () => ({type: SET_POSITION})
 export const changePositionAC = () => ({type: CHANGE_POSITION})
 export const changeUserAC = (id, name, score) => ({type: CHANGE_USER, id, name, score})
 export const toggleModalAC = (isOpen, id) => ({type: OPEN_MODAL, isOpen, id})
+export const setIsLoaded = (isLoaded) => ({type: SET_IS_LOADED, isLoaded})

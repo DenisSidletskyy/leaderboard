@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {
     changeCurrentUsersAC,
     formatUserAC,
-    setCurrentUsersAC, setGlobalLeadersAC,
+    setCurrentUsersAC, setGlobalLeadersAC, setIsLoaded,
     setPositionAC,
     setUsersAC,
     sortUsersAC,
@@ -67,6 +67,7 @@ export const Table = ({users, usersLength, currentUsersIndex}) => {
     }
 
     const getNewUsers = () => {
+        dispatch(setIsLoaded(false))
         getUsers().then(data => {
             dispatch(setUsersAC(data))
             dispatch(setCurrentUsersAC())
@@ -74,6 +75,7 @@ export const Table = ({users, usersLength, currentUsersIndex}) => {
             dispatch(formatUserAC())
             dispatch(setPositionAC())
             dispatch(setGlobalLeadersAC())
+            dispatch(setIsLoaded(true))
         })
     }
 

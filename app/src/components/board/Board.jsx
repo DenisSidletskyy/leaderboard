@@ -8,6 +8,7 @@ import {
     formatUserAC,
     setCurrentUsersAC,
     setGlobalLeadersAC,
+    setIsLoaded,
     setPositionAC,
     setUsersAC,
     sortUsersAC
@@ -20,6 +21,7 @@ export const Board = () => {
     const state = useSelector(state => state)
 
     useEffect(() => {
+        dispatch(setIsLoaded(false))
         getUsers().then(data => {
             dispatch(setUsersAC(data))
             dispatch(setCurrentUsersAC())
@@ -27,25 +29,23 @@ export const Board = () => {
             dispatch(formatUserAC())
             dispatch(setPositionAC())
             dispatch(setGlobalLeadersAC())
+            dispatch(setIsLoaded(true))
         })
     }, [])
 
     if (!state.users) {
-        return <span>LOADER</span>
+        return null
     }
 
     return (
         <>
-            {state.modal.isOpen ? <Modal prevUserData={state.modal.prevUserData}/> : null}
+            <Modal/>
 
             <Leaders globalLeaders={state.globalLeaders}/>
 
-            <Table
-                users={state.users[state.currentUsersIndex]}
-                usersLength={state.users.length}
-                currentUsersIndex={state.currentUsersIndex}
-            />
+            <Table users={state.users[state.currentUsersIndex]}
+                   usersLength={state.users.length}
+                   currentUsersIndex={state.currentUsersIndex}/>
         </>
     )
-
 }

@@ -10,7 +10,7 @@ import {
     addUserAC,
     changePositionAC,
     changeUserAC,
-    setGlobalLeadersAC,
+    setGlobalLeadersAC, setIsLoaded,
     sortUsersAC,
     toggleModalAC
 } from "../../redux/actionCreators";
@@ -31,6 +31,7 @@ export const Form = ({prevUserData}) => {
 
     const onSubmit = (values, {resetForm}) => {
         if (prevUserData) {
+            dispatch(setIsLoaded(false))
             postUser(values.name).then(data => {
                 dispatch(changeUserAC(prevUserData.id, data['display-name'], values.points))
                 dispatch(sortUsersAC())
@@ -38,10 +39,12 @@ export const Form = ({prevUserData}) => {
                 dispatch(setGlobalLeadersAC())
                 dispatch(toggleModalAC(false))
                 resetForm({})
+                dispatch(setIsLoaded(true))
             })
         }
 
         if (!prevUserData) {
+            dispatch(setIsLoaded(false))
             postUser(values.name).then(data => {
                 dispatch(addUserAC({name: data['display-name'], score: values.points}))
                 dispatch(sortUsersAC())
@@ -49,6 +52,7 @@ export const Form = ({prevUserData}) => {
                 dispatch(setGlobalLeadersAC())
                 dispatch(toggleModalAC(false))
                 resetForm({})
+                dispatch(setIsLoaded(true))
             })
         }
     }

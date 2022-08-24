@@ -4,7 +4,7 @@ import {
     CHANGE_USER,
     FORMAT_USERS,
     OPEN_MODAL,
-    SET_CURRENT_USERS, SET_GLOBAL_LEADERS,
+    SET_CURRENT_USERS, SET_GLOBAL_LEADERS, SET_IS_LOADED,
     SET_POSITION,
     SET_USERS,
     SORT_USERS
@@ -17,7 +17,8 @@ let defaultState = {
     modal: {
         isOpen: false,
         prevUserData: null
-    }
+    },
+    isLoaded: false
 }
 
 export const reducer = (state = defaultState, action) => {
@@ -155,6 +156,11 @@ export const reducer = (state = defaultState, action) => {
                     ? state.users[state.currentUsersIndex].filter(user => user.id === action.id)[0]
                     : null
             }
+        }
+
+        case SET_IS_LOADED: return {
+            ...state,
+            isLoaded: action.isLoaded
         }
 
         default: return state
