@@ -12,10 +12,8 @@ const User = ({user}) => (
 )
 
 export const Leaders = ({users}) => {
-
     return (
         <div className={s.wrapper}>
-
             <div className={s.header}>
                 <span className={s.red}>Five</span>
                 &nbsp;&nbsp;

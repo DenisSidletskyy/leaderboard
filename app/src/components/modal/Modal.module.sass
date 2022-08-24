@@ -1,14 +1,27 @@
 @import "src/mixins"
 
+.wrapper
+  width: 100%
+  min-height: 100%
+  background-color: rgb(1, 1, 1, 0.3)
+  display: flex
+  justify-content: center
+  align-items: center
+  position: fixed
+  top: 0
+  z-index: 1
+
 .modal
   height: 297px
   width: 511px
+  margin: 0 20px
   background: #F6F6F6
   border-radius: 10px
   position: relative
   display: flex
   justify-content: center
   align-items: center
+  overflow: hidden
 
 .cloud
   position: absolute
@@ -60,3 +73,7 @@
     transform: translateY(3px)
   100%
     transform: translateY(0px)
+
+@media (max-width: 440px)
+  .form
+    padding-left: 0

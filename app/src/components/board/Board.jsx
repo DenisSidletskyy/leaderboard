@@ -1,27 +1,35 @@
 import {Leaders} from "./leaders/Leaders";
-import {useModal, useUsers} from "../../hooks/hooks";
 import {Table} from "./table/Table";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Modal} from "../modal";
+import {useEffect} from "react";
+import {getUsers} from "../../api";
+import {formatUserAC, setPositionAC, setUsersAC, sortUsersAC} from "../../redux/actionCreators";
 
 export const Board = () => {
 
-    const users = useUsers()
+    const dispatch = useDispatch()
 
-    const modal = useSelector(state => state.modal)
+    const state = useSelector(state => state)
 
-    if (!users) {
-        return (
-            <>
-                <span>LOADER</span>
-            </>
-        )
+    useEffect(() => {
+        getUsers().then(data => {
+            dispatch(setUsersAC(data))
+            dispatch(sortUsersAC())
+            dispatch(formatUserAC())
+            dispatch(setPositionAC())
+        })
+    }, [])
+
+    if (!state.users) {
+        return <span>LOADER</span>
     }
 
     return (
         <>
-            {/*{modal.isOpen && <Modal prevUserData={modal.prevUserData}/>}*/}
-            <Leaders users={users}/>
-            <Table users={users}/>
+            {state.modal.isOpen ? <Modal prevUserData={state.modal.prevUserData}/> : null}
+            <Leaders users={state.users}/>
+            <Table users={state.users}/>
         </>
     )
 

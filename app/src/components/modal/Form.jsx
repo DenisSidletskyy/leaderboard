@@ -4,21 +4,43 @@ import {useFormik} from "formik";
 import {Button} from "components/button";
 import {ReactComponent as UpArrow} from "images/upArrow.svg";
 import {ReactComponent as DownArrow} from "images/downArrow.svg";
+import {useDispatch} from "react-redux";
+import {postUser} from "../../api";
+import {addUserAC, changePositionAC, changeUserAC, sortUsersAC, toggleModalAC} from "../../redux/actionCreators";
 
-export const Form = ({setUser}) => {
+export const Form = ({prevUserData}) => {
+
+    const dispatch = useDispatch()
 
     const initialValues = {
-        name: '',
-        points: '',
+        name: prevUserData ? prevUserData.name : '',
+        points: prevUserData ? prevUserData.score : '',
     }
 
     const validationSchema = Yup.object({
-        name: Yup.string().required().test((val) => val && val.length >= 3),
+        name: Yup.string().required().test((val) => val && val.length >= 3 && val.length <= 8),
         points: Yup.number().required().min(0).max(100),
     })
 
     const onSubmit = (values, {resetForm}) => {
-        setUser(values)
+        if (prevUserData) {
+            postUser(values.name).then(data => {
+                dispatch(changeUserAC(prevUserData.id, data['display-name'], values.points))
+                dispatch(sortUsersAC())
+                dispatch(changePositionAC())
+                dispatch(toggleModalAC(false))
+            })
+        }
+
+        if (!prevUserData) {
+            postUser(values.name).then(data => {
+                dispatch(addUserAC({name: data['display-name'], score: values.points}))
+                dispatch(sortUsersAC())
+                dispatch(changePositionAC())
+                dispatch(toggleModalAC(false))
+            })
+        }
+
         resetForm({})
     }
 
@@ -81,12 +103,9 @@ export const Form = ({setUser}) => {
             <Button
                 className={'orangeBlack'}
                 type={'submit'}
-                disabled={(form.errors.name && form.touched.name) || (form.errors.points && form.touched.points)}
             >
                 Save
             </Button>
         </form>
     )
 }
-
-export default Form

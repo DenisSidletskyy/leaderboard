@@ -2,9 +2,17 @@ import s from './Table.module.sass'
 import {ReactComponent as Edit} from "images/edit.svg";
 import avatar from 'images/avatars/avatar1.svg'
 import Button from "../../button/Button";
-import {useChangeUser, useModal} from "../../../hooks/hooks";
+import {useDispatch} from "react-redux";
+import {toggleModalAC} from "../../../redux/actionCreators";
 
 const User = ({user}) => {
+
+    const dispatch = useDispatch()
+
+    const openModal = (isOpen, id) => {
+        dispatch(toggleModalAC(isOpen, id))
+    }
+
     return (
         <div className={s.user}>
             <div className={s.left}>
@@ -24,14 +32,14 @@ const User = ({user}) => {
                     {
                         user.position.diff === null
                             ? 'No change'
-                            : user.position.diff === 1
-                                ? Math.abs(user.position.diff) + 'place'
-                                : Math.abs(user.position.diff) + 'places'
+                            : Math.abs(user.position.diff) === 1
+                                ? Math.abs(user.position.diff) + ' place'
+                                : Math.abs(user.position.diff) + ' places'
                     }
                 </span>
                 <Button
                     className={'edit'}
-                    onClick={() => useModal(true, user.id)}
+                    onClick={() => openModal(true, user.id)}
                 >
                     <Edit/>
                 </Button>
@@ -41,7 +49,14 @@ const User = ({user}) => {
 
 }
 
-export const Table = ({users, openModal}) => {
+export const Table = ({users}) => {
+
+    const dispatch = useDispatch()
+
+    const openModal = (isOpen) => {
+        dispatch(toggleModalAC(isOpen))
+    }
+
     return (
         <div className={s.wrapper}>
 
@@ -75,7 +90,7 @@ export const Table = ({users, openModal}) => {
 
                     <Button
                         className={'blueWhite'}
-                        onClick={() => useModal(true)}
+                        onClick={() => openModal(true)}
                     >
                         Add new user
                     </Button>
