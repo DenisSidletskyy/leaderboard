@@ -1,9 +1,27 @@
-import {ADD_USER, CHANGE_POSITION, CHANGE_USER, FORMAT_USERS, SET_POSITION, SET_USERS, SORT_USERS} from "./actions";
+import {
+    ADD_USER,
+    CHANGE_CURRENT_DAY, CHANGE_DAY,
+    SET_DAY,
+    SET_DIFFERENCE,
+    SET_HISTORY,
+    SET_IS_LOADED,
+    SET_LEADERS,
+    SET_POSITION,
+    SORT_DAY, TOGGLE_MODAL, UPDATE_USER
+} from "./actions";
 
-export const setUsersAC = (users) => ({type: SET_USERS, users})
-export const sortUsersAC = () => ({type: SORT_USERS})
-export const formatUserAC = () => ({type: FORMAT_USERS})
-export const addUserAC = (user) => ({type: ADD_USER, user})
+export const setDayAC = (day) => ({type: SET_DAY, day})
+export const setLeadersAC = () => ({type: SET_LEADERS})
+export const sortDayAC = () => ({type: SORT_DAY})
+
+export const setHistoryAC = () => ({type: SET_HISTORY})
 export const setPositionAC = () => ({type: SET_POSITION})
-export const changePositionAC = () => ({type: CHANGE_POSITION})
-export const changeUserAC = (id, name, score) => ({type: CHANGE_USER, id, name, score})
+export const setDifferenceAC = () => ({type: SET_DIFFERENCE})
+export const changeCurrentDayAC = (direction) => ({type: CHANGE_CURRENT_DAY, direction})
+
+export const addUserAC = (name, score) => ({type: ADD_USER, name, score})
+export const updateUserAC = (id, name, score) => ({type: UPDATE_USER, id, name, score})
+
+export const changeDayAC = (direction) => ({type: CHANGE_DAY, direction})
+export const setIsLoadedAC = (isLoaded) => ({type: SET_IS_LOADED, isLoaded})
+export const toggleModalAC = (isOpen, id) => ({type: TOGGLE_MODAL, isOpen, id})

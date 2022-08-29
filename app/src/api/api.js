@@ -6,7 +6,8 @@ const instance = axios.create({
 
 export const getUsers = () => {
 
-    return instance.get('starting-state')
+    return instance
+        .get('starting-state')
         .then(response => response.data)
         .catch(error => {
             if (error.response.status === 500) {
@@ -16,13 +17,14 @@ export const getUsers = () => {
         })
 }
 
-export const setUser = (username) => {
+export const postUser = (name) => {
 
-    return instance.post('process-user', {username})
-        .then(response => response.data)
+    return instance
+        .post('process-user', {username: name})
+        .then(response => response.data['display-name'])
         .catch(error => {
             if (error.response.status === 500) {
-                return setUser(username)
+                return postUser(name)
             }
             throw error
         })

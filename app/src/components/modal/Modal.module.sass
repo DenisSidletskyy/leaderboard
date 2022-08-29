@@ -1,0 +1,79 @@
+@import "src/mixins"
+
+.wrapper
+  width: 100%
+  min-height: 100%
+  background-color: rgb(1, 1, 1, 0.3)
+  display: flex
+  justify-content: center
+  align-items: center
+  position: fixed
+  top: 0
+  z-index: 1
+
+.modal
+  height: 297px
+  width: 511px
+  margin: 0 20px
+  background: #F6F6F6
+  border-radius: 10px
+  position: relative
+  display: flex
+  justify-content: center
+  align-items: center
+  overflow: hidden
+
+.cloud
+  position: absolute
+  top: 0
+  left: 0
+
+.table
+  position: absolute
+  bottom: 0
+  right: 39px
+
+.form
+  padding-left: 20px
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 10px
+
+.title
+  @include textStyle(1.833em, 600, #000000)
+  padding-bottom: 10px
+  position: relative
+
+.input
+  @include textStyle(1em, 500, #000000)
+  height: 32px
+  width: 203px
+  border-radius: 10px
+  padding: 0 13px
+  border: 1px solid rgba(3, 3, 39, 0.58)
+
+  &::placeholder
+    opacity: 0.5
+
+.inputWrapper
+  display: inline-flex
+  position: relative
+
+.inputError
+  border: 1px solid red
+  animation: 200ms linear forwards error
+
+@keyframes error
+  25%
+    transform: translateY(3px)
+  50%
+    transform: translateY(-3px)
+  75%
+    transform: translateY(3px)
+  100%
+    transform: translateY(0px)
+
+@media (max-width: 440px)
+  .form
+    padding-left: 0

@@ -13,3 +13,18 @@ button {
     border: 0;
     cursor: pointer;
 }
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+@media (max-width: 440px) {
+    #root {
+        font-size: 10px;
+    }
+}

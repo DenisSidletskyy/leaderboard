@@ -1,0 +1,120 @@
+@import "../../mixins"
+
+.wrapper
+  padding: 0 20px
+  border-radius: 10px
+  background-color: #F6F6F6
+  display: flex
+  flex-direction: column
+
+.top
+  padding: 20px 0
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.description
+  @include textStyle(1.500em, 500, #000000)
+
+.navigation
+  display: flex
+  justify-content: end
+  gap: 8px
+
+.table
+  padding-bottom: 20px
+  display: flex
+  flex-direction: column
+  gap: 8px
+  position: relative
+
+.tableEnter
+  opacity: 0
+
+.tableEnterActive
+  opacity: 1
+  transition: opacity 500ms linear
+
+
+.user
+  padding: 8px 20px
+  border: 1px solid #DBDBDB
+  border-radius: 10px
+  background-color: #F1F1F1
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.left
+  display: flex
+  align-items: center
+  gap: 30px
+
+.right
+  display: flex
+  align-items: center
+  gap: 10px
+
+.position
+  @include textStyle(1.500em, 400, #808080)
+  width: 30px
+
+.avatar
+  width: 3.667em
+  height: 3.667em
+
+.score
+  @include textStyle(1.500em, 600, #000000)
+  width: 25px
+  text-align: center
+
+.name
+  @include textStyle(1em, 400, #000000)
+
+.difference
+  @include textStyle(1em, 500, #F99746)
+
+.plus
+  @include textStyle(1em, 500, #40A3C3)
+
+  &:before
+    @include textStyle(1.2em, 600, #40A3C3)
+    content: "\21E7"
+    padding: 5px
+
+.minus
+  @include textStyle(1em, 500, #B64C41)
+
+  &:before
+    @include textStyle(1.2em, 600, #B64C41)
+    content: "\21E9"
+    padding: 5px
+
+@media (max-width: 650px)
+  .top
+    flex-direction: column
+    gap: 10px
+
+@media (max-width: 500px)
+  .left
+    gap: 15px
+
+@media (max-width: 420px)
+  .user
+    flex-direction: column
+    align-items: unset
+
+  .left, .right
+    justify-content: space-between
+
+  .position
+    order: 1
+
+  .avatar
+    order: 3
+
+  .score
+    order: 2
+
+  .name
+    order: 4

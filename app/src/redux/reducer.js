@@ -1,66 +1,167 @@
-import {ADD_USER, CHANGE_POSITION, CHANGE_USER, FORMAT_USERS, SET_POSITION, SET_USERS, SORT_USERS} from "./actions";
+import {
+    SET_LEADERS,
+    SET_DAY,
+    SET_IS_LOADED,
+    SORT_DAY,
+    SET_HISTORY,
+    SET_POSITION,
+    SET_DIFFERENCE,
+    CHANGE_CURRENT_DAY, ADD_USER, TOGGLE_MODAL, UPDATE_USER, CHANGE_DAY
+} from "./actions";
 
-export const reducer = (state = {users: null}, action) => {
+let defaultState = {
+    days: null,
+    leaders: null,
+    history: null,
+    currentDayIndex: 0,
+    modal: {
+        isOpen: false,
+        user: null,
+    },
+    isLoaded: true
+}
+
+export const reducer = (state = defaultState, action) => {
 
     switch (action.type) {
 
-        case SET_USERS: return {
+        case SET_DAY:
+
+            const days = state.days === null ? [] : [...state.days]
+
+            const day = action.day.map((user, index) => ({
+                id: index.toString(),
+                name: user.name[0].toUpperCase() + user.name.slice(1),
+                score: Number.isInteger(user.score) ? user.score : 0,
+                position: {curr: null, diff: 0}
+            }))
+
+            days.push(day)
+
+            return {...state, days}
+
+        case SET_LEADERS: return {
             ...state,
-            users: action.users.map((user, index) => ({...user, id: index, score: Number.isInteger(user.score) ? user.score : 0}))
+            leaders: [...state.days]
+                .flat()
+                .sort((prev, next) => next.score - prev.score)
+                .filter((value, index, self) =>
+                    self.findIndex((v) => v.name === value.name) === index
+                )
+                .slice(0, 4)
         }
 
-        case ADD_USER: return {
+
+        case SET_IS_LOADED: return {
             ...state,
-            users: [...state.users, {...action.user, id: state.users.length}]
+            isLoaded: action.isLoaded
         }
 
-        case SORT_USERS: return {
+        case SORT_DAY: return {
             ...state,
-            users: [...state.users].sort((prev, next) => next.score - prev.score)
+            days: state.days.map((day, index) =>
+                index === state.currentDayIndex
+                    ? day.sort((prev, next) => next.score - prev.score)
+                    : day
+            )
         }
 
-        case FORMAT_USERS: return {
+        case SET_HISTORY: return {
             ...state,
-            users: state.users.map(user => ({...user, name: user.name[0].toUpperCase() + user.name.slice(1)}))
+            history: [...state.days].reverse().slice(1).flat()
         }
 
         case SET_POSITION: return {
             ...state,
-            users: state.users.map((user, index) => ({...user, position: {curr: index + 1, prev: null, diff: null}}))
+            days: state.days.map((day, index) =>
+                index === state.currentDayIndex
+                    ? day.map((user, index) => ({
+                        ...user,
+                        position: {...user.position, curr: index + 1}
+                    }))
+                    : day
+            )
         }
 
-        case CHANGE_POSITION: return {
-            ...state,
-            users: state.users.map((user, index) => {
+        case SET_DIFFERENCE: {
 
-                if (!user.position) {
-                    return {
-                        ...user,
-                        position: {curr: index + 1, prev: null, diff: null}}
-                }
+            const setDiff = (history, user) => {
 
-                if (user.position.curr !== index + 1) {
-                    return {
-                        ...user,
-                        position: {
-                            curr: index + 1,
-                            prev: user.position.curr,
-                            diff: Math.abs(user.position.curr - (index + 1))
-                        }
+                for (let i = 0; i < history.length; i++) {
+                    if (history[i].name === user.name) {
+                        return history[i].position.curr - user.position.curr
                     }
                 }
 
-                return user
-            })
+                return 0
+            }
+
+            return {
+                ...state,
+                days: state.history !== null
+                    ? state.days.map((day, index) =>
+                        index === state.currentDayIndex
+                            ? day.map(user => ({
+                                ...user,
+                                position: {
+                                    ...user.position,
+                                    diff: setDiff(state.history, user)
+                                }
+                            }))
+                            : day
+                    )
+                    : state.days
+            }
         }
 
-        case CHANGE_USER: return {
+        case CHANGE_CURRENT_DAY: return {
             ...state,
-            users: state.users.map(user => user.id === action.id
-                ? {...user, name: action.name, score: action.score}
-                : user
-            )
+            currentDayIndex: action.direction
+                ? state.currentDayIndex + action.direction
+                : state.days.length
+        }
 
+        case ADD_USER: return {
+            ...state,
+            days: state.days.map((day, index) =>
+                index === state.currentDayIndex
+                    ? [...day, {
+                        id: day.length.toString(),
+                        name: action.name,
+                        score: action.score,
+                        position: {curr: null, diff: 0}
+                    }]
+                    : day
+            )
+        }
+
+        case UPDATE_USER: return {
+            ...state,
+            days: state.days.map((day, index) =>
+                index === state.currentDayIndex
+                    ? day.map(user =>
+                        user.id === action.id
+                            ? {...user, name: action.name, score: action.score}
+                            : user
+                    )
+                    : day
+            )
+        }
+
+        case CHANGE_DAY: return {
+            ...state,
+            currentDayIndex: state.currentDayIndex + action.direction
+        }
+
+        case TOGGLE_MODAL: return {
+            ...state,
+            modal: {
+                ...state.modal,
+                isOpen: action.isOpen,
+                user: action.id
+                    ? state.days[state.currentDayIndex].filter(user => user.id === action.id)[0]
+                    : null
+            }
         }
 
         default: return state
