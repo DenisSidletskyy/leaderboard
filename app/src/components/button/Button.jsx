@@ -1,6 +1,6 @@
 import s from './Button.module.sass'
 
-const Button = ({children, className, disabled, type, onClick}) => {
+export const Button = ({children, className, disabled, type, onClick}) => {
     return (
         <button
             className={s[className]}
@@ -12,5 +12,3 @@ const Button = ({children, className, disabled, type, onClick}) => {
         </button>
     )
 }
-
-export default Button

@@ -1,4 +1,4 @@
-@import "src/mixins"
+@import "../../mixins"
 
 .wrapper
   padding: 0 20px
@@ -26,6 +26,15 @@
   display: flex
   flex-direction: column
   gap: 8px
+  position: relative
+
+.tableEnter
+  opacity: 0
+
+.tableEnterActive
+  opacity: 1
+  transition: opacity 500ms linear
+
 
 .user
   padding: 8px 20px
@@ -69,17 +78,17 @@
   @include textStyle(1em, 500, #40A3C3)
 
   &:before
+    @include textStyle(1.2em, 600, #40A3C3)
     content: "\21E7"
     padding: 5px
-    font-size: 15px
 
 .minus
   @include textStyle(1em, 500, #B64C41)
 
   &:before
+    @include textStyle(1.2em, 600, #B64C41)
     content: "\21E9"
     padding: 5px
-    font-size: 15px
 
 @media (max-width: 650px)
   .top

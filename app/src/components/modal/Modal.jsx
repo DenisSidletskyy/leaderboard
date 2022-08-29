@@ -1,44 +1,36 @@
 import s from './Modal.module.sass'
-import {ReactComponent as Close} from "images/close.svg";
-import {ReactComponent as Cloud} from "images/cloud.svg";
-import {ReactComponent as Table} from "images/table.svg";
-import ReactDOM from "react-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {cloud, table, close} from "images";
 import {Form} from "./Form";
 import {Button} from "components/button";
-import {toggleModalAC} from "../../redux/actionCreators";
+import {toggleModalTC} from "redux/thunkCreators";
+import ReactDOM from "react-dom";
+import {useDispatch} from "react-redux";
 
-export const Modal = () => {
+export const Modal = ({modal}) => {
 
     const dispatch = useDispatch()
 
-    const modal = useSelector(state => state.modal)
-
-    const closeModal = () => {
-        dispatch(toggleModalAC(false))
+    const toggleModal = (isOpen) => {
+        dispatch(toggleModalTC(isOpen))
     }
 
-    if (!modal.isOpen) {
-        return null
-    }
+    if (!modal.isOpen) return null
 
     return ReactDOM.createPortal(
         <div className={s.wrapper}>
             <div className={s.modal}>
 
-                <div className={s.cloud}>
-                    <Cloud/>
-                </div>
+                <img className={s.cloud} src={cloud} alt="cloud"/>
+                <img className={s.table} src={table} alt="table"/>
 
-                <div className={s.table}>
-                    <Table/>
-                </div>
-
-                <Button className={'close'} onClick={closeModal}>
-                    <Close/>
+                <Button
+                    className={'close'}
+                    onClick={() => toggleModal(false)}
+                >
+                    <img src={close} alt="close"/>
                 </Button>
 
-                <Form prevUserData={modal.prevUserData}/>
+                <Form user={modal.user}/>
             </div>
         </div>
         , document.getElementById('root')

@@ -21,7 +21,7 @@ export const postUser = (name) => {
 
     return instance
         .post('process-user', {username: name})
-        .then(response => response.data)
+        .then(response => response.data['display-name'])
         .catch(error => {
             if (error.response.status === 500) {
                 return postUser(name)

@@ -1,17 +1,8 @@
 import s from './Leaders.module.sass'
-import podium from "images/podium.svg";
-import avatar from "images/avatars/avatar1.svg";
+import {podium} from "images";
+import {Leader} from "./Leader";
 
-const User = ({user}) => (
-    <div className={s.user}>
-        <img className={s.avatar} src={avatar} alt="avatar"/>
-        <div className={s.score}>
-            {`${user.name} - ${user.score}`}
-        </div>
-    </div>
-)
-
-export const Leaders = ({globalLeaders}) => {
+export const Leaders = ({leaders}) => {
     return (
         <div className={s.wrapper}>
             <div className={s.header}>
@@ -26,7 +17,7 @@ export const Leaders = ({globalLeaders}) => {
                     <div className={s.description}>You can be among the leaders already today</div>
                     <img className={s.podium} src={podium} alt="podium"/>
                     <div className={s.users}>
-                        {globalLeaders.map((user, index) => <User key={index} user={user}/>)}
+                        {leaders.map((user, index) => <Leader key={index} user={user}/>)}
                     </div>
                 </div>
             </div>

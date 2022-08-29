@@ -4,9 +4,17 @@
   @include buttonStyle(#F99746, 10px, 6px 24px)
   @include textStyle(0.833em, 600, #FFFFFF)
 
+  &:disabled
+    opacity: 0.5
+    cursor: default
+
 .blueWhite
   @include buttonStyle(#1E3CA9, 10px, 6px 24px)
   @include textStyle(0.833em, 600, #FFFFFF)
+
+  &:disabled
+    opacity: 0.5
+    cursor: default
 
 .orangeBlack
   @include buttonStyle(#F99746, 10px, 6px 24px)
@@ -24,6 +32,24 @@
 .edit
   @include buttonStyle(transparent, 0, 0)
   display: inline-flex
+  position: relative
+
+  &:disabled
+    cursor: default
+
+    &:after
+      content: ''
+      height: 21px
+      width: 21px
+      border-radius: 15%
+      background-color: grey
+      opacity: 0.3
+      position: absolute
+      color: red
+      bottom: 0
+      left: 0
+
+
 
 .close
   @include buttonStyle(transparent, 0, 0)

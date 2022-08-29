@@ -2,59 +2,28 @@ import s from './Modal.module.sass'
 import * as Yup from 'yup'
 import {useFormik} from "formik";
 import {Button} from "components/button";
-import {ReactComponent as UpArrow} from "images/upArrow.svg";
-import {ReactComponent as DownArrow} from "images/downArrow.svg";
+import {ReactComponent as UpArrow} from "images/svg/up.svg";
+import {ReactComponent as DownArrow} from "images/svg/down.svg";
 import {useDispatch} from "react-redux";
-import {postUser} from "../../api";
-import {
-    addUserAC,
-    changePositionAC,
-    changeUserAC,
-    setGlobalLeadersAC, setIsLoaded,
-    sortUsersAC,
-    toggleModalAC
-} from "../../redux/actionCreators";
+import {addUserTC, updateUserTC} from "redux/thunkCreators";
 
-export const Form = ({prevUserData}) => {
+export const Form = ({user}) => {
 
     const dispatch = useDispatch()
 
     const initialValues = {
-        name: prevUserData ? prevUserData.name : '',
-        points: prevUserData ? prevUserData.score : '',
+        name: user ? user.name : '',
+        points: user ? user.score : '',
     }
 
     const validationSchema = Yup.object({
         name: Yup.string().required().test((val) => val && val.length >= 3 && val.length <= 8),
-        points: Yup.number().required().min(0).max(100),
+        points: Yup.number().required().min(0).max(1000),
     })
 
-    const onSubmit = (values, {resetForm}) => {
-        if (prevUserData) {
-            dispatch(setIsLoaded(false))
-            postUser(values.name).then(data => {
-                dispatch(changeUserAC(prevUserData.id, data['display-name'], values.points))
-                dispatch(sortUsersAC())
-                dispatch(changePositionAC())
-                dispatch(setGlobalLeadersAC())
-                dispatch(toggleModalAC(false))
-                resetForm({})
-                dispatch(setIsLoaded(true))
-            })
-        }
-
-        if (!prevUserData) {
-            dispatch(setIsLoaded(false))
-            postUser(values.name).then(data => {
-                dispatch(addUserAC({name: data['display-name'], score: values.points}))
-                dispatch(sortUsersAC())
-                dispatch(changePositionAC())
-                dispatch(setGlobalLeadersAC())
-                dispatch(toggleModalAC(false))
-                resetForm({})
-                dispatch(setIsLoaded(true))
-            })
-        }
+    const onSubmit = (values) => {
+        if (user) dispatch(updateUserTC(user.id, values.name, values.points))
+        if (!user) dispatch(addUserTC(values.name, values.points))
     }
 
     const form = useFormik({

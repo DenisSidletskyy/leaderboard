@@ -1,26 +1,27 @@
 import {
     ADD_USER,
-    CHANGE_CURRENT_USERS,
-    CHANGE_POSITION,
-    CHANGE_USER,
-    FORMAT_USERS,
-    OPEN_MODAL,
-    SET_CURRENT_USERS,
-    SET_GLOBAL_LEADERS, SET_IS_LOADED,
+    CHANGE_CURRENT_DAY, CHANGE_DAY,
+    SET_DAY,
+    SET_DIFFERENCE,
+    SET_HISTORY,
+    SET_IS_LOADED,
+    SET_LEADERS,
     SET_POSITION,
-    SET_USERS,
-    SORT_USERS
+    SORT_DAY, TOGGLE_MODAL, UPDATE_USER
 } from "./actions";
 
-export const setUsersAC = (users) => ({type: SET_USERS, users})
-export const setCurrentUsersAC = (index) => ({type: SET_CURRENT_USERS, index})
-export const changeCurrentUsersAC = (direction) => ({type: CHANGE_CURRENT_USERS, direction})
-export const setGlobalLeadersAC = () => ({type: SET_GLOBAL_LEADERS})
-export const sortUsersAC = () => ({type: SORT_USERS})
-export const formatUserAC = () => ({type: FORMAT_USERS})
-export const addUserAC = (user) => ({type: ADD_USER, user})
+export const setDayAC = (day) => ({type: SET_DAY, day})
+export const setLeadersAC = () => ({type: SET_LEADERS})
+export const sortDayAC = () => ({type: SORT_DAY})
+
+export const setHistoryAC = () => ({type: SET_HISTORY})
 export const setPositionAC = () => ({type: SET_POSITION})
-export const changePositionAC = () => ({type: CHANGE_POSITION})
-export const changeUserAC = (id, name, score) => ({type: CHANGE_USER, id, name, score})
-export const toggleModalAC = (isOpen, id) => ({type: OPEN_MODAL, isOpen, id})
-export const setIsLoaded = (isLoaded) => ({type: SET_IS_LOADED, isLoaded})
+export const setDifferenceAC = () => ({type: SET_DIFFERENCE})
+export const changeCurrentDayAC = (direction) => ({type: CHANGE_CURRENT_DAY, direction})
+
+export const addUserAC = (name, score) => ({type: ADD_USER, name, score})
+export const updateUserAC = (id, name, score) => ({type: UPDATE_USER, id, name, score})
+
+export const changeDayAC = (direction) => ({type: CHANGE_DAY, direction})
+export const setIsLoadedAC = (isLoaded) => ({type: SET_IS_LOADED, isLoaded})
+export const toggleModalAC = (isOpen, id) => ({type: TOGGLE_MODAL, isOpen, id})
